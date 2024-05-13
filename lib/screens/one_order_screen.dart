@@ -18,7 +18,7 @@ class OneOrderScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-              body: Padding(
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
         child: ListView(
           children: [
@@ -92,14 +92,14 @@ class OneOrderScreen extends StatelessWidget {
             const SizedBox(height: 16),
             const Divider(
               color: Color(0xFFEFEFF4),
-              thickness: 1,
+              thickness: 0,
             ),
             const SizedBox(height: 21),
             _locationRow(startPoint: true, order: order),
             const SizedBox(height: 17),
             const Divider(
               color: Color(0xFFEFEFF4),
-              thickness: 1,
+              thickness: 0,
               indent: 29,
               endIndent: 2,
             ),
@@ -136,34 +136,31 @@ class OneOrderScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             underlineCount(width),
-
           ],
         ),
-              ),
-            ));
+      ),
+    ));
   }
 
-  Column textColumn(OrderInfo order, bool isPrice){
+  Column textColumn(OrderInfo order, bool isPrice) {
     return Column(
-      crossAxisAlignment: isPrice ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment:
+          isPrice ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        TextContainer( isPrice ?
-          "${formatCurrency(order.orderPrice)} UZS"
-            : "Цена заказа",
+        TextContainer(
+          isPrice ? "${formatCurrency(order.orderPrice)} UZS" : "Цена заказа",
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
         const SizedBox(height: 3),
-        TextContainer( isPrice ?
-          "${formatCurrency(order.waitingPrice)} UZS"
-            : "Ожидание",
+        TextContainer(
+          isPrice ? "${formatCurrency(order.waitingPrice)} UZS" : "Ожидание",
           fontSize: 15,
           fontWeight: FontWeight.w500,
         ),
         const SizedBox(height: 3),
-        TextContainer( isPrice ?
-          "${formatCurrency(order.totalPrice)} UZS"
-            : "Итого",
+        TextContainer(
+          isPrice ? "${formatCurrency(order.totalPrice)} UZS" : "Итого",
           fontSize: 15,
           fontWeight: FontWeight.w700,
         ),
@@ -179,12 +176,13 @@ class OneOrderScreen extends StatelessWidget {
     }
     return Text(
       output,
-      maxLines: 1,overflow: TextOverflow.clip,
-      style: const TextStyle(color: Colors.white,
+      maxLines: 1,
+      overflow: TextOverflow.clip,
+      style: const TextStyle(
+        color: Colors.white,
       ),
     );
   }
-
 
   Widget infoBox(
       {required OrderInfo order, required bool isPay, required double width}) {

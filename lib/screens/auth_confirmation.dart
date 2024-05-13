@@ -136,43 +136,49 @@ class _AuthScreenConfirmationState extends State<AuthScreenConfirmation> {
                 ),
                 const SizedBox(height: 16),
                 buttonContainer(
-                  text: "Ok",
-                  containerColor: containerColor,
-                  textColor: textColor,
-                  onTap: () {
-                    int.parse(numberController.text) != numberSms
-                        ? (setState(() {
-                            checkSms = true;
-                          }))
-                        : (setState(
-                            () {
-                              checkSms = false;
-                              sendSms = false;
+                    text: "Ok",
+                    containerColor: containerColor,
+                    textColor: textColor,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MenuScreen()));
+                    }
+                    // onTap: () {
+                    //   int.parse(numberController.text) != numberSms
+                    //       ? (setState(() {
+                    //           checkSms = true;
+                    //         }))
+                    //       : (setState(
+                    //           () {
+                    //             checkSms = false;
+                    //             sendSms = false;
 
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const MenuScreen()),
-                                (route) => false,
-                              );
-                            },
-                          ));
-                  },
-                ),
-                checkSms
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12.0),
-                        child: Center(
-                            child: TextContainer(
-                          "Вы ввели не верный код авторизации, попробуйте запросить код повторно",
-                          fontSize: 14,
-                          textColor: Colors.red,
-                          fontWeight: FontWeight.w500,
-                          textAlign: TextAlign.center,
-                        )),
-                      )
-                    : const SizedBox(),
-                const Spacer(),
+                    //             Navigator.pushAndRemoveUntil(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => const MenuScreen()),
+                    //               (route) => false,
+                    //             );
+                    //           },
+                    //         ));
+                    // },
+                    ),
+                // checkSms
+                //     ? const Padding(
+                //         padding: EdgeInsets.symmetric(vertical: 12.0),
+                //         child: Center(
+                //             child: TextContainer(
+                //           "Вы ввели не верный код авторизации, попробуйте запросить код повторно",
+                //           fontSize: 14,
+                //           textColor: Colors.red,
+                //           fontWeight: FontWeight.w500,
+                //           textAlign: TextAlign.center,
+                //         )),
+                //       )
+                //     : const SizedBox(),
+                // const Spacer(),
                 Center(
                   child: MaterialButton(
                     splashColor: Colors.transparent, // Remove splash color
