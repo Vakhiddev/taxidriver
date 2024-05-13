@@ -37,17 +37,17 @@ class _AddCardScreenState extends State<AddCardScreen> {
                     Navigator.pop(context);
                   }),
               const SizedBox(height: 27),
-              Row(
+              const Row(
                 children: [
-                  const TextContainer(
+                  TextContainer(
                     "Добавить карту",
                     fontWeight: FontWeight.w700,
                     fontSize: 30,
                   ),
-                  const Spacer(),
-                  InkWell(
-                      onTap: () {},
-                      child: SvgPicture.asset("assets/icons/add.svg")),
+                  Spacer(),
+                  // InkWell(
+                  //     onTap: () {},
+                  //     child: SvgPicture.asset("assets/icons/add.svg")),
                 ],
               ),
               const SizedBox(height: 24),
@@ -75,7 +75,8 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           fontSize: 14,
                         ),
                         const SizedBox(height: 9),
-                        CustomTextField(height: 40,
+                        CustomTextField(
+                          height: 40,
                           controller: dateController,
                           inputType: InputType.dueDate,
                         ),
@@ -105,11 +106,12 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               const SizedBox(height: 25),
               buttonContainer(
-                  text: "Добавить карту",
-                  height: 51,
-                  containerColor: numberController.text.isNotEmpty ?
-                  const Color(0xFFFFD600) : const Color(0xFF4D4D4D),
-                  textColor: Colors.black,
+                text: "Добавить карту",
+                height: 51,
+                containerColor: numberController.text.isNotEmpty
+                    ? const Color(0xFFFFD600)
+                    : const Color(0xFF4D4D4D),
+                textColor: Colors.black,
               ),
             ],
           ),
