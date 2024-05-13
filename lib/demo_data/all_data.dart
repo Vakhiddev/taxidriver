@@ -62,6 +62,22 @@ class CardInfo {
   });
 }
 
+class MonthlySpends {
+  final DateTime month;
+  final double spend;
+  const MonthlySpends({
+    required this.month,
+    required this.spend,
+});
+}
+
+List<MonthlySpends> spends = [
+  MonthlySpends(month: DateTime(2024,1), spend: 7127800),
+  MonthlySpends(month: DateTime(2024,2), spend: 7127800),
+  MonthlySpends(month: DateTime(2024,3), spend: 7127800),
+  MonthlySpends(month: DateTime(2024,4), spend: 7127800),
+];
+
 UserInfo user = const UserInfo(
   id: 1,
   fio: "Дмитрий Пономарев",

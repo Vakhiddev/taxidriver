@@ -3,13 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 
 class MainButton extends StatefulWidget {
-  final String icon;
+  final String? icon;
   final String title;
   final VoidCallback onPressed;
 
   const MainButton({
     super.key,
-    required this.icon,
+     this.icon,
     required this.title,
     required this.onPressed,
   });
@@ -55,8 +55,9 @@ class _MainButtonState extends State<MainButton> with SingleTickerProviderStateM
             alignment: Alignment.center,
             child: Container(
               height: 65,
-              margin: const EdgeInsets.only(bottom: 14),
-              padding: const EdgeInsets.only(left: 18, right: 13,),
+              margin: EdgeInsets.only(bottom: widget.icon != null ? 14 : 10),
+              padding: EdgeInsets.only(left: widget.icon != null ? 18 : 23,
+                right: widget.icon != null ? 13 : 19,),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: const Color(0xFF23262B),
@@ -64,7 +65,8 @@ class _MainButtonState extends State<MainButton> with SingleTickerProviderStateM
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(widget.icon),
+                  if(widget.icon != null)
+                    SvgPicture.asset(widget.icon!),
                   const SizedBox(width: 13),
                   TextContainer(
                     widget.title,

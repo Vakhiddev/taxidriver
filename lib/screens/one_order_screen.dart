@@ -200,7 +200,7 @@ class OneOrderScreen extends StatelessWidget {
               ? order.typePay
                   ? "assets/icons/wallet.svg"
                   : "assets/icons/uzcard.svg"
-              : "assets/icons/coller.svg"),
+              : "assets/icons/coller.svg",width: 22,height: 22,),
           const SizedBox(width: 9),
           Expanded(
             child: TextContainer(

@@ -4,6 +4,9 @@ import 'package:taxidriver/screens/auth_screen.dart';
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/text_container.dart';
 
+late double screenWidth;
+late double screenHeight;
+
 class Language extends StatefulWidget {
   const Language({super.key});
 
@@ -15,7 +18,9 @@ class _LanguageState extends State<Language> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    screenHeight = height;
     double width = MediaQuery.of(context).size.width;
+    screenWidth = width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
