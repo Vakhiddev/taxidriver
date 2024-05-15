@@ -250,9 +250,10 @@ class OneOrderScreen extends StatelessWidget {
     );
   }
 
-  String rateFormat(double value) {
-    String formattedValue = value.toStringAsFixed(2);
-    formattedValue = formattedValue.replaceAll('.', ',');
-    return formattedValue;
-  }
+
+}
+String rateFormat(double value) {
+  String formattedValue = value.toStringAsFixed(2);
+  formattedValue = formattedValue.replaceAll('.', ',');
+  return formattedValue;
 }

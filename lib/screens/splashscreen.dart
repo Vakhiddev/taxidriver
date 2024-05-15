@@ -35,22 +35,22 @@ class _SplashScreenState extends State<SplashScreen> {
                     borderRadius: BorderRadius.circular(38),
                     color: Color(0xFF27282A),
                     image: const DecorationImage(
-                        image: AssetImage('assets/images/appIcon.png'))),
+                        image: AssetImage('assets/images/splash_logo.png'))),
               ),
               const SizedBox(
                 height: 18,
               ),
-              Text('DAVR TAXI',
+              Text('GARAGE',
                   style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
-                          fontSize: 29,
-                          fontWeight: FontWeight.w800,
+                          fontSize: 33,
+                          fontWeight: FontWeight.w700,
                           fontStyle: FontStyle.normal,
                           color: Colors.white))),
-              Text('Онлайн служба такси',
+              Text('Онлайн заказ такси',
                   style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w300,
                           fontStyle: FontStyle.normal,
                           color: Color(0xffFFFFFF)))),

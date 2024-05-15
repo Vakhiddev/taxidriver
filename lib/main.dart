@@ -8,9 +8,12 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    screenHeight = height;
+    double width = MediaQuery.of(context).size.width;
+    screenWidth = width;
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
@@ -20,3 +23,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+late double screenWidth;
+late double screenHeight;

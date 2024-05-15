@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/container_textfield.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
-import 'package:taxidriver/screens/language_page.dart';
 import '../custom_widgets/back_button.dart';
+import '../main.dart';
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({super.key});
@@ -58,6 +56,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               const SizedBox(height: 9),
               CustomTextField(
+                maxLength: 19,
                   height: 40,
                   controller: numberController,
                   inputType: InputType.cardNumber),
@@ -75,7 +74,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           fontSize: 14,
                         ),
                         const SizedBox(height: 9),
-                        CustomTextField(height: 40,
+                        CustomTextField(
+                          maxLength: 5,
+                          height: 40,
                           controller: dateController,
                           inputType: InputType.dueDate,
                         ),
@@ -94,6 +95,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         ),
                         const SizedBox(height: 9),
                         CustomTextField(
+                          maxLength: 17,
                           height: 40,
                           controller: phoneNumberController,
                           inputType: InputType.phoneNumber,
@@ -105,6 +107,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               const SizedBox(height: 25),
               buttonContainer(
+                onTap: (){
+
+                },
                   text: "Добавить карту",
                   height: 51,
                   containerColor: numberController.text.isNotEmpty ?

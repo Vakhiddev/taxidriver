@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 enum InputType {
@@ -8,6 +9,7 @@ enum InputType {
   simple,
 }
 class CustomTextField extends StatefulWidget {
+  final int? maxLength;
   final InputType inputType;
   final TextEditingController controller;
   final double? height;
@@ -17,6 +19,7 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.hintText,
     this.height,
+    this.maxLength,
     required this.inputType,
   });
 
@@ -41,9 +44,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
           const SizedBox(width: 12),
           Expanded(
             child: TextField(
+              maxLength: widget.maxLength,
               controller: widget.controller,
               keyboardType: widget.inputType != InputType.simple ? TextInputType.number : TextInputType.text,
               decoration: InputDecoration(
+                counterStyle: const TextStyle(height: double.minPositive,),
+                  counterText: "",
                 border: InputBorder.none,
                 hintText: widget.hintText ?? '',
                 hintStyle: GoogleFonts.montserrat(
@@ -63,12 +69,14 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
 
               onChanged: (value) {
-                if(widget.inputType != InputType.simple) {
+                setState(() {
+                  print("setstate worked");
+                  if(widget.inputType != InputType.simple) {
                     widget.controller.text = formatInput(value);
 
-                } else {
+                  }
+                });
 
-                }
               },
             ),
           ),
@@ -102,21 +110,21 @@ String formatCardNumber(String input) {
   return formatted;
 }
 
-String formatPhoneNumber(String input) {
-  String digitsOnly = input.replaceAll(RegExp(r'[^0-9]'), '');
-  String formatted = '+';
-
-  List<int> spaceIndices = [3, 5, 8,10];
-
-  for (int i = 0, spaceIndex = 0; i < digitsOnly.length; i++) {
-    if (spaceIndex < spaceIndices.length && i == spaceIndices[spaceIndex]) {
-      formatted += ' ';
-      spaceIndex++;
-    }
-    formatted += digitsOnly[i];
-  }
-  return formatted;
-}
+// String formatPhoneNumber(String input) {
+//   String digitsOnly = input.replaceAll(RegExp(r'[^0-9]'), '');
+//   String formatted = '+';
+//
+//   List<int> spaceIndices = [3, 5, 8,10];
+//
+//   for (int i = 0, spaceIndex = 0; i < digitsOnly.length; i++) {
+//     if (spaceIndex < spaceIndices.length && i == spaceIndices[spaceIndex]) {
+//       formatted += ' ';
+//       spaceIndex++;
+//     }
+//     formatted += digitsOnly[i];
+//   }
+//   return formatted;
+// }
 
 String formatDueDate(String input) {
   String digitsOnly = input.replaceAll(RegExp(r'[^0-9]'), '');
@@ -125,6 +133,28 @@ String formatDueDate(String input) {
   for (int i = 0; i < digitsOnly.length; i++) {
     if (i == 2) {
       formatted += '/';
+    }
+    formatted += digitsOnly[i];
+  }
+  return formatted;
+}
+
+String formatPhoneNumber(String input) {
+  String digitsOnly = input.replaceAll(RegExp(r'[^0-9]'), '');
+
+  if (digitsOnly.startsWith('998')) {
+    digitsOnly = digitsOnly.substring(3);
+  }
+  digitsOnly = digitsOnly.substring(0, digitsOnly.length > 9 ? 9 : digitsOnly.length);
+
+  String formatted = digitsOnly.isEmpty ? '' : '+998';
+
+  List<int> spaceIndices = [0,2, 5, 7, 10];
+
+  for (int i = 0, spaceIndex = 0; i < digitsOnly.length; i++) {
+    if (spaceIndex < spaceIndices.length && i == spaceIndices[spaceIndex]) {
+      formatted += ' ';
+      spaceIndex++;
     }
     formatted += digitsOnly[i];
   }

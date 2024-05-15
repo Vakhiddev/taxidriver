@@ -3,6 +3,7 @@ import 'package:taxidriver/custom_widgets/menu_button.dart';
 import 'package:taxidriver/custom_widgets/user_info_widget.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/finance_screen.dart';
+import 'package:taxidriver/screens/home_screen.dart';
 import 'package:taxidriver/screens/my_profile.dart';
 import 'package:taxidriver/screens/orders_screen.dart';
 import 'package:taxidriver/screens/settings.dart';
@@ -34,7 +35,9 @@ class MenuScreen extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => const MyProfile()));
                 },
-                onCanceled: () {},
+                onCanceled: () {
+                  Navigator.pop(context);
+                },
               ),
               const SizedBox(height: 42),
               const TextContainer(
@@ -77,7 +80,12 @@ class MenuScreen extends StatelessWidget {
               MainButton(
                 icon: "assets/icons/chat.svg",
                 title: "Служба поддержки",
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
+                },
               ),
               const Spacer(),
               Padding(

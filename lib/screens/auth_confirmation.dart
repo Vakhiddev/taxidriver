@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:taxidriver/screens/menu_screen.dart';
+import 'package:taxidriver/screens/registration.dart';
 
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/container_button.dart';
@@ -152,7 +153,7 @@ class _AuthScreenConfirmationState extends State<AuthScreenConfirmation> {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const MenuScreen()),
+                                    builder: (context) => const RegistrationScreen()),
                                 (route) => false,
                               );
                             },

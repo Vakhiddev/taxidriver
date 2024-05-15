@@ -4,6 +4,7 @@ import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/language_page.dart';
 import '../custom_widgets/back_button.dart';
+import '../main.dart';
 
 class MyIncomeScreen extends StatelessWidget {
   const MyIncomeScreen({super.key});

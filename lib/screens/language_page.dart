@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:taxidriver/main.dart';
 import 'package:taxidriver/screens/auth_screen.dart';
 
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/text_container.dart';
-
-late double screenWidth;
-late double screenHeight;
 
 class Language extends StatefulWidget {
   const Language({super.key});
@@ -17,10 +15,6 @@ class Language extends StatefulWidget {
 class _LanguageState extends State<Language> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    screenHeight = height;
-    double width = MediaQuery.of(context).size.width;
-    screenWidth = width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,24 +24,24 @@ class _LanguageState extends State<Language> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 backButton(
-                    height: height,
-                    width: width,
+                    height: screenHeight,
+                    width: screenWidth,
                     onTap: () {
                       Navigator.pop(context);
                     }),
-                SizedBox(height: height * 0.12),
+                SizedBox(height: screenHeight * 0.12),
                 const TextContainer(
                   "Выберите язык",
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: height * 0.012),
+                SizedBox(height: screenHeight * 0.012),
                 const TextContainer(
                   "Пожалуйста, выберите язык\nинтерфейса для приложения",
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
-                SizedBox(height: height * 0.025),
+                SizedBox(height: screenHeight * 0.025),
                 languageButton(
                     title: "Русский язык",
                     image: "assets/images/flag_ru.png",

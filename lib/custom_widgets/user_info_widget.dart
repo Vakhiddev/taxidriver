@@ -45,7 +45,9 @@ Widget userInfoW({
                       textColor: Colors.white,
                     ),
                     const Spacer(),
-                    SvgPicture.asset("assets/icons/cances.svg"),
+                    InkWell(
+                      onTap: onCanceled,
+                        child: SvgPicture.asset("assets/icons/cances.svg")),
 
                   ],
                 ),

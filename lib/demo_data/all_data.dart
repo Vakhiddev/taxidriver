@@ -3,12 +3,14 @@ class UserInfo {
   final String fio;
   final String phoneNumber;
   final String avatar;
+  final double rate;
 
   const UserInfo({
     required this.id,
     required this.fio,
     required this.phoneNumber,
     required this.avatar,
+    required this.rate
   });
 }
 
@@ -83,6 +85,7 @@ UserInfo user = const UserInfo(
   fio: "Дмитрий Пономарев",
   phoneNumber: "+998935310224",
   avatar: "assets/images/avatar.jpg",
+  rate: 4.97,
 );
 
 CardInfo myCard = CardInfo(
