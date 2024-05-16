@@ -80,12 +80,7 @@ class MenuScreen extends StatelessWidget {
               MainButton(
                 icon: "assets/icons/chat.svg",
                 title: "Служба поддержки",
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
-                },
+                onPressed: () {},
               ),
               const Spacer(),
               Padding(
