@@ -1,10 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:taxidriver/custom_widgets/oreder_bottom_sheet.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
+import 'package:taxidriver/main.dart';
 import 'package:taxidriver/screens/menu_screen.dart';
 import 'package:taxidriver/screens/one_order_screen.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
+
+import '../custom_widgets/animated_button.dart';
+import '../custom_widgets/home_widgets.dart';
+import '../custom_widgets/tarif_botton_sheet.dart';
+import 'finance_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +25,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   YandexMapController? mapController;
+  ValueNotifier<bool> isDialOpen = ValueNotifier(false);
+  bool buttonIsOn = false;
+  bool isOnline = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +87,131 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(width: 7),
                     SvgPicture.asset("assets/icons/star.svg"),
                     const Spacer(),
-                    InkWell(
-                        child: SvgPicture.asset("assets/icons/black_filter.svg")),
-
+                    const SizedBox(height: 12),
+                    SpeedDial(
+                      childrenButtonSize: Size(158,55),
+                      backgroundColor: Colors.transparent,
+                      overlayColor: Color(0xFF1E2127).withOpacity(0.9),
+                      activeBackgroundColor: Color(0xFF1E2127).withOpacity(0.79),
+                      direction: SpeedDialDirection.down,
+                      curve: Curves.easeInBack,
+                      openCloseDial: isDialOpen,
+                      child: SvgPicture.asset("assets/icons/black_filter.svg"),
+                      activeChild:  SvgPicture.asset("assets/icons/buttons/x.svg"),
+                      children: [
+                        SpeedDialChild(
+                          labelBackgroundColor: Colors.transparent,
+                            child: floatButton(
+                                title: "Мои тарифы", onPressed: (){
+                              setState(() {
+                                isDialOpen.value = false;
+                              });
+                              tarifButtonSheet(context,(){
+                                    Navigator.pop(context);
+                              });
+                            }),
+                        ),
+                        SpeedDialChild(
+                          labelBackgroundColor: Colors.transparent,
+                          child: floatButton(
+                              title: "Мой баланс", onPressed: (){
+                                setState(() {
+                                  isDialOpen.value = false;
+                                });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const FinanceScreen()));
+                          }),
+                        ),
+                      ],
+                    )
                   ],
                 ),
+              ),
+              if(isOnline == true)
+              Positioned(
+                bottom: 240,
+                left: 60,
+                child: InkWell(
+                  onTap: (){
+                    orderButtonSheet(context, () { },orders[0],ButtonType.show);
+                  },
+                  child: Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                        border:
+                        Border.all(color: const Color(0xFFF9AD42), width: 1),
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(orders[0].clientAvatar),
+                            fit: BoxFit.cover)),
+                  ),
+                ),
+              ),
+              if(buttonIsOn == true)
+              Positioned(
+                bottom: 86,
+                left: screenWidth * 0.2820,
+                child: isOnlineButton(isOnline: isOnline,onPressed: (){
+                  setState(() {
+                    isOnline = !isOnline;
+                  });
+                }),
+              ),
+              if(buttonIsOn == false)
+                Positioned(
+                    bottom: 149,
+                    child: selectOnlineButton(isOnline: true,
+                        onPressed: (){
+                      setState(() {
+                        isOnline = true;
+                      });
+                        })),
+              if(buttonIsOn == false)
+                Positioned(
+                    bottom: 86,
+                    child: selectOnlineButton(isOnline: false,
+                        onPressed: (){
+                          setState(() {
+                            isOnline = false;
+                          });
+                        })),
+              Positioned(
+                bottom: 16,
+                child: isOnlineChangingButton(isOnline:isOnline,buttonIsOn: buttonIsOn,
+                    onPressed: (){
+                  setState(() {
+                    buttonIsOn = !buttonIsOn;
+                  });
+                    }),
               )
         ]),
+      ),
+    );
+  }
+
+  Widget floatButton({required String title,required VoidCallback onPressed}) {
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: EdgeInsets.only(left: 15,right: 9,top: 13,bottom: 13),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+              border: Border.all(width: 0.4,color: Colors.white),
+          color: const Color(0xFF1F2126),
+        ),
+        child: Row(
+          children: [
+            TextContainer(title,
+            fontWeight: FontWeight.w500,
+              fontSize: 16,
+            ),
+            const Spacer(),
+            SvgPicture.asset("assets/icons/next.svg")
+          ],
+        ),
       ),
     );
   }

@@ -6,7 +6,9 @@ Widget buttonContainer(
     {required String text,
     required Color containerColor,
     required Color textColor,
+      FontWeight? fontWeight,
       double? height,
+      double? fontSize,
     VoidCallback? onTap}) {
   return InkWell(
     onTap: onTap,
@@ -19,8 +21,8 @@ Widget buttonContainer(
         color: containerColor,
       ),
       child: Center(
-        child: TextContainer(text,
-            fontWeight: FontWeight.w600, textColor: textColor),
+        child: TextContainer(text,fontSize: fontSize ?? 14,
+            fontWeight: fontWeight ?? FontWeight.w600, textColor: textColor),
       ),
     ),
   );

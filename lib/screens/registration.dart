@@ -87,7 +87,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const HomeScreen()));
-                  });
+                  },Color(0xFF2C313A).withOpacity(0.8));
               }
             )
           ],

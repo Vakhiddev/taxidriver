@@ -3,9 +3,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 
-Future showButtonSheet(BuildContext context, VoidCallback onPressed) async {
+Future showButtonSheet(BuildContext context, VoidCallback onPressed,Color? barrierColor) async {
   await showModalBottomSheet(
-    backgroundColor: Color(0xFF2C313A).withOpacity(0.2),
+    barrierColor: barrierColor,
     isDismissible: false,
     context: context,
     builder: (BuildContext builderContext) {

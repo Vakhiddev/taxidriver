@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     borderRadius: BorderRadius.circular(38),
                     color: Color(0xFF27282A),
                     image: const DecorationImage(
-                        image: AssetImage('assets/images/splash_logo.png'))),
+                        image: AssetImage('assets/images/main_logo.png'))),
               ),
               const SizedBox(
                 height: 18,
