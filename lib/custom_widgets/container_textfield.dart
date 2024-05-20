@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../main.dart';
 enum InputType {
   cardNumber,
   phoneNumber,
@@ -31,24 +32,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: widget.inputType != InputType.simple ? 10 : 20),
+      padding: EdgeInsets.only(
+          top: widget.inputType != InputType.simple ? 12 : 4,
+          left: widget.inputType == InputType.dueDate ? screenWidth * 0.2769 * 0.18 : widget.inputType != InputType.simple ? 10 : 20),
       height: widget.height ?? 60,
+      // height: 30,
       decoration: BoxDecoration(
           color: const Color(0xFF26282D),
           borderRadius: BorderRadius.circular(5)
       ),
-      child: Row(
+      child: Stack(
         children: [
           if (widget.inputType == InputType.cardNumber)
-            SvgPicture.asset("assets/icons/wallet2.svg", width: 24, height: 24),
+            SvgPicture.asset("assets/icons/wallet2.svg", width: 24,height: 17,),
           const SizedBox(width: 12),
-          Expanded(
+          Padding(
+            padding: EdgeInsets.only(
+              left: widget.inputType == InputType.cardNumber ? screenWidth * 0.078  :
+              widget.inputType == InputType.dueDate ? screenWidth * 0.022 :
+              widget.inputType == InputType.phoneNumber ? screenWidth * 0.011 : 0,
+                top: widget.inputType != InputType.simple ? 5 : 0),
             child: TextField(
               maxLength: widget.maxLength,
               controller: widget.controller,
               keyboardType: widget.inputType != InputType.simple ? TextInputType.number : TextInputType.text,
               decoration: InputDecoration(
-                  counterStyle: const TextStyle(height: double.minPositive,),
+                  // counterStyle: const TextStyle(height: double.minPositive,),
                   counterText: "",
                   border: InputBorder.none,
                   hintText: widget.hintText ?? '',

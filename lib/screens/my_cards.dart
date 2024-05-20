@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/add_card_screen.dart';
-import 'package:taxidriver/screens/language_page.dart';
+import '../cubit/active_button_cubit.dart';
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/container_textfield.dart';
 import '../main.dart';
@@ -13,52 +14,67 @@ class MyCardsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return BlocProvider(
+      create: (_) => ButtonCubit()..fetchCards(),
+      child: SafeArea(
         child: Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 13),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              backButton(
-                  height: screenHeight,
-                  width: screenWidth,
-                  onTap: () {
-                    Navigator.pop(context);
-                  }),
-              const SizedBox(height: 27),
-              Row(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 13),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TextContainer(
-                    "Мои карты",
-                    fontWeight: FontWeight.w700,
-                    fontSize: 30,
-                  ),
-                  const Spacer(),
-                  InkWell(
+                  backButton(
+                      height: screenHeight,
+                      width: screenWidth,
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AddCardScreen()));
-                      },
-                      child: SvgPicture.asset("assets/icons/add.svg")),
+                        Navigator.pop(context);
+                      }),
+                  const SizedBox(height: 27),
+                  Row(
+                    children: [
+                      const TextContainer(
+                        "Мои карты",
+                        fontWeight: FontWeight.w700,
+                        fontSize: 30,
+                      ),
+                      const Spacer(),
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AddCardScreen()));
+                          },
+                          child: SvgPicture.asset("assets/icons/add.svg")),
+                    ],
+                  ),
+                  const SizedBox(height: 35),
+                  BlocBuilder<ButtonCubit, ButtonState>(
+                    builder: (context, state) {
+                      return Column(
+                        children: List.generate(state.cards.length, (index) {
+                          return
+                              cardView(card: state.cards[index]);
+
+                        }),
+                      );
+                    },
+                  ),
                 ],
               ),
-              const SizedBox(height: 35),
-              cardView(card: myCard)
-            ],
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 
   Widget cardView({required CardInfo card}) {
     return Container(
+      margin: EdgeInsets.only(bottom: 22),
       padding:
-          const EdgeInsets.only(left: 23, right: 23, top: 22.5, bottom: 25),
+      const EdgeInsets.only(left: 23, right: 23, top: 22.5, bottom: 25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: const Color(0xFF23262B),
@@ -68,7 +84,7 @@ class MyCardsScreen extends StatelessWidget {
           Row(
             children: [
               SvgPicture.asset("assets/icons/uzcard.svg"),
-              const Spacer(),
+              const SizedBox(width: 19),
               TextContainer(
                 formatCardNumber((card.cardNumber).toString()),
                 fontWeight: FontWeight.w700,

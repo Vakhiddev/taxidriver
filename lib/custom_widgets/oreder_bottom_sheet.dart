@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:taxidriver/custom_widgets/animated_button.dart';
@@ -25,7 +26,7 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
-              height: 700,
+              // height: double.minPositive,
               width: double.maxFinite,
               decoration: const BoxDecoration(
                 color: Color(0xFF1F2126),
@@ -37,16 +38,15 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
               child: Stack(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: EdgeInsets.only(top: 24,
                         bottom: type == ButtonType.show ? 107 :
                     type == ButtonType.take ? 291 : 92), // Adjust this value if needed
                     child: SingleChildScrollView(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 12),
-                          SvgPicture.asset("assets/icons/line.svg"),
-                          const SizedBox(height: 10),
+                          // const SizedBox(height: 12),
+                          // const SizedBox(height: 10),
                           if (type == ButtonType.show) priceAndDistance(order: order),
                           if (type == ButtonType.take)
                             clientInfoTake(
@@ -83,7 +83,7 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                             ),
                           SizedBox(
                               height: type == ButtonType.show
-                                  ? 20
+                                  ? 0
                                   : type == ButtonType.take
                                   ? 13
                                   : 16),
@@ -168,6 +168,15 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                       ),
                     ),
                   ),
+
+                  Positioned(
+                      // bottom: 0,
+                      left: 0,
+                      right: 0,
+                      top: 12,
+                      child: SvgPicture.asset("assets/icons/line.svg")),
+
+
                   if (type == ButtonType.show)
                     Positioned(
                       bottom: 0,
@@ -323,34 +332,6 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                       ),
                     ),
 
-                  // Positioned(
-                  //   bottom: 0,
-                  //   left: 0,
-                  //   right: 0,
-                  //   child: buttonContainer(
-                  //     fontSize: 22,
-                  //     textColor: Colors.black,
-                  //     fontWeight: FontWeight.w800,
-                  //     containerColor: Color(0xFFFFD600),
-                  //     text: type == ButtonType.show
-                  //         ? "SHOW"
-                  //         : type == ButtonType.take
-                  //         ? "TAKE"
-                  //         : "CLOSE",
-                  //     onTap: () {
-                  //       setState(() {
-                  //         if (type == ButtonType.show) {
-                  //           type = ButtonType.take;
-                  //         } else if (type == ButtonType.take) {
-                  //           type = ButtonType.close;
-                  //         } else {
-                  //           Navigator.pop(context);
-                  //           rateButtonSheet(context, () {});
-                  //         }
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
             );

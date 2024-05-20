@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Spacer(),
                     const SizedBox(height: 12),
                     SpeedDial(
-                      childrenButtonSize: Size(158,55),
+                      childrenButtonSize: Size(screenWidth * 0.40,55),
                       backgroundColor: Colors.transparent,
                       overlayColor: Color(0xFF1E2127).withOpacity(0.9),
                       activeBackgroundColor: Color(0xFF1E2127).withOpacity(0.79),

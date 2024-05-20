@@ -18,7 +18,6 @@ Future<void> tarifButtonSheet(BuildContext context, VoidCallback onPressed) asyn
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           return Container(
-            height: screenHeight * 0.5985,
             width: double.maxFinite,
             padding: const EdgeInsets.symmetric(horizontal: 17),
             decoration: const BoxDecoration(
