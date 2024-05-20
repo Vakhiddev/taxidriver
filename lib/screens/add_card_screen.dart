@@ -137,6 +137,7 @@ class _AddCardViewState extends State<AddCardView> {
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 25),
                   BlocBuilder<ButtonCubit, ButtonState>(
                     builder: (context, state) {
