@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taxidriver/custom_widgets/settings_button.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/screens/language_page.dart';
 import 'package:taxidriver/screens/settings_language.dart';
 import '../custom_widgets/back_button.dart';
 import '../main.dart';
+import '../theme/theme_notifier.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -14,9 +16,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool isOn = true;
   @override
   Widget build(BuildContext context) {
+    bool isLightTheme = Theme.of(context).brightness != Brightness.light;
     return SafeArea(
         child: Scaffold(
           body: Padding(
@@ -38,12 +40,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 const SizedBox(height: 27),
                 settingsButton(
-                  isOn: isOn,
+                  isOn: isLightTheme,
                     buttonType: ButtonType.switchB, title: "Включить ночной режим",
                 onChanged: (value){
                     setState(() {
-                      isOn = value;
+                      isLightTheme = value;
                     });
+                    Provider.of<ThemeNotifier>(context, listen: false).toggleTheme();
+
                 }),
                 const SizedBox(height: 9),
                 settingsButton(

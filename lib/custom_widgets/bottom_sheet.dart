@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 Future showButtonSheet(BuildContext context, VoidCallback onPressed,Color? barrierColor) async {
   await showModalBottomSheet(
@@ -13,8 +14,8 @@ Future showButtonSheet(BuildContext context, VoidCallback onPressed,Color? barri
         height: 220,
         width: double.maxFinite,
         padding: const EdgeInsets.only(left: 15, right: 23),
-        decoration: const BoxDecoration(
-          color: Color(0xFF1F2126),
+        decoration: BoxDecoration(
+          color: Theme.of(context).customColor.buttonSheetColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
@@ -24,7 +25,7 @@ Future showButtonSheet(BuildContext context, VoidCallback onPressed,Color? barri
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 12),
-            SvgPicture.asset("assets/icons/line.svg"),
+            SvgPicture.asset("assets/icons/line.svg",color: Theme.of(context).customColor.mainTextColor,),
             const SizedBox(height: 26),
             const TextContainer(
               textAlign: TextAlign.center,

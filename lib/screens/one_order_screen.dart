@@ -6,6 +6,7 @@ import 'package:taxidriver/custom_widgets/order_box.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/main.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 import '../custom_widgets/back_button.dart';
 
@@ -91,15 +92,15 @@ class OneOrderScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            const Divider(
-              color: Color(0xFFEFEFF4),
+             Divider(
+              color: Theme.of(context).customColor.mainTextColor.withOpacity(0.5),
               thickness: 1,
             ),
             const SizedBox(height: 21),
             locationRow(startPoint: true, order: order),
             const SizedBox(height: 17),
-            const Divider(
-              color: Color(0xFFEFEFF4),
+             Divider(
+              color: Theme.of(context).customColor.mainTextColor.withOpacity(0.5),
               thickness: 1,
               indent: 29,
               endIndent: 2,
@@ -121,7 +122,8 @@ class OneOrderScreen extends StatelessWidget {
               width: double.maxFinite,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFF26282D),
+                  color: Theme.of(context).customColor.textFieldColor,
+                  border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor)
               ),
               child: TextContainer(order.warning,
               fontSize: 15),
@@ -173,9 +175,7 @@ Text underlineCount(double width) {
   return Text(
     output,
     maxLines: 1,overflow: TextOverflow.clip,
-    style: const TextStyle(color: Colors.white,
-    ),
-  );
+    );
 }
 
 Column checkColumn(OrderInfo order,){
@@ -234,34 +234,39 @@ String rateFormat(double value) {
 
 Widget infoBox(
     {required OrderInfo order, required bool isPay, required double width}) {
-  return Container(
-    width: width * 0.45,
-    height: 49,
-    padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      color: const Color(0xFF26282D),
-    ),
-    child: Row(
-      children: [
-        SvgPicture.asset(isPay
-            ? order.typePay
-            ? "assets/icons/wallet.svg"
-            : "assets/icons/uzcard.svg"
-            : "assets/icons/coller.svg",width: 22,height: 22,),
-        const SizedBox(width: 9),
-        Expanded(
-          child: TextContainer(
-            isPay
+  return Builder(
+    builder: (context) {
+      return Container(
+        width: width * 0.45,
+        height: 49,
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 9),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).customColor.textFieldColor,
+          border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor)
+        ),
+        child: Row(
+          children: [
+            SvgPicture.asset(isPay
                 ? order.typePay
-                ? "Hаличный "
-                : "Оплата картой"
-                : "Кондиционер",
-            fontWeight: FontWeight.w400,
-            fontSize: 16,
-          ),
-        )
-      ],
-    ),
+                ? "assets/icons/wallet.svg"
+                : "assets/icons/uzcard.svg"
+                : "assets/icons/coller.svg",width: 22,height: 22,),
+            const SizedBox(width: 9),
+            Expanded(
+              child: TextContainer(
+                isPay
+                    ? order.typePay
+                    ? "Hаличный "
+                    : "Оплата картой"
+                    : "Кондиционер",
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+              ),
+            )
+          ],
+        ),
+      );
+    }
   );
 }

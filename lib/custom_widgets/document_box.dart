@@ -1,13 +1,19 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 Widget documentWidget({required String imagePath}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
-    decoration: BoxDecoration(
-        color: const Color(0xFF26282D), borderRadius: BorderRadius.circular(5)),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Image.asset(imagePath),
-    ),
+  return Builder(
+    builder: (context) {
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 10),
+        decoration: BoxDecoration(
+            color: Theme.of(context).customColor.containerColor,
+            borderRadius: BorderRadius.circular(5)),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(imagePath),
+        ),
+      );
+    }
   );
 }

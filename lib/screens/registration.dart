@@ -4,6 +4,7 @@ import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/container_textfield.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/screens/home_screen.dart';
+import 'package:taxidriver/theme/colors.dart';
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/bottom_sheet.dart';
 import '../main.dart';
@@ -101,7 +102,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       height: 60,
       padding: const EdgeInsets.only(left: 22,right: 20),
       decoration: BoxDecoration(
-          color: const Color(0xFF26282D),
+        border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor),
+          color: Theme.of(context).customColor.textFieldColor,
           borderRadius: BorderRadius.circular(5)),
       child: Row(
         children: [

@@ -20,6 +20,7 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    bool isLightTheme = Theme.of(context).brightness == Brightness.light;
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -46,24 +47,28 @@ class _MyProfileState extends State<MyProfile> {
               ),
               const SizedBox(height: 27),
               CustomTextField(
+                color: isLightTheme ? Colors.white : null,
                 inputType: InputType.simple,
                 hintText: "Пономарев Дмитрий Сергеевич",
                 controller: controller,
               ),
               const SizedBox(height: 15),
               CustomTextField(
+                color: isLightTheme ? Colors.white : null,
                 inputType: InputType.simple,
                 hintText: "Jaguar XGL",
                 controller: controller2,
               ),
               const SizedBox(height: 15),
               CustomTextField(
+                color: isLightTheme ? Colors.white : null,
                 inputType: InputType.simple,
                 hintText: "01 S 602 BL",
                 controller: controller3,
               ),
               const SizedBox(height: 15),
               CustomTextField(
+                color: isLightTheme ? Colors.white : null,
                 inputType: InputType.simple,
                 hintText: "Белый",
                 controller: controller4,

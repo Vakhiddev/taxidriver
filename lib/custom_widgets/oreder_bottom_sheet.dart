@@ -8,6 +8,7 @@ import 'package:taxidriver/custom_widgets/rate_button_sheet.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/main.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 import '../screens/one_order_screen.dart';
 
@@ -25,11 +26,11 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
     builder: (BuildContext builderContext) {
       return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
+            bool isLightTheme = Theme.of(context).brightness == Brightness.light;
             return Container(
-              // height: double.minPositive,
               width: double.maxFinite,
-              decoration: const BoxDecoration(
-                color: Color(0xFF1F2126),
+              decoration: BoxDecoration(
+                color: Theme.of(context).customColor.buttonSheetColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -45,13 +46,21 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // const SizedBox(height: 12),
-                          // const SizedBox(height: 10),
                           if (type == ButtonType.show) priceAndDistance(order: order),
                           if (type == ButtonType.take)
                             clientInfoTake(
                               order: order,
-                              rightWidgets: Row(
+                              rightWidgets: isLightTheme ?
+                              Row(
+                                children: [
+                                  SvgPicture.asset("assets/icons/buttons/call2.svg"),
+                                  const SizedBox(width: 16),
+                                  SvgPicture.asset("assets/icons/buttons/sms2.svg"),
+                                  const SizedBox(width: 16),
+                                  SvgPicture.asset("assets/icons/buttons/share2.svg")
+                                ],
+                              ):
+                              Row(
                                 children: [
                                   SvgPicture.asset("assets/icons/buttons/call.svg"),
                                   const SizedBox(width: 16),
@@ -88,7 +97,7 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                                   ? 13
                                   : 16),
                           Divider(
-                            color: Color(0xFFEFEFF4).withOpacity(0.2),
+                            color: Theme.of(context).customColor.mainTextColor.withOpacity(0.2),
                             thickness: 0.5,
                             indent: type == ButtonType.show
                                 ? 0
@@ -108,7 +117,7 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                           ),
                           SizedBox(height: type == ButtonType.show ? 18 : 10),
                           Divider(
-                            color: Color(0xFFEFEFF4).withOpacity(0.2),
+                            color: Theme.of(context).customColor.mainTextColor.withOpacity(0.2),
                             thickness: 0.5,
                             indent: type == ButtonType.show
                                 ? 0
@@ -150,7 +159,8 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                             width: double.maxFinite,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xFF26282D),
+                                color: Theme.of(context).customColor.textFieldColor,
+                                border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor)
                             ),
                             child: TextContainer(order.warning, fontSize: 15),
                           ),
@@ -174,7 +184,8 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
                       left: 0,
                       right: 0,
                       top: 12,
-                      child: SvgPicture.asset("assets/icons/line.svg")),
+                      child: SvgPicture.asset("assets/icons/line.svg",
+                      color: Theme.of(context).customColor.mainTextColor,)),
 
 
                   if (type == ButtonType.show)
@@ -341,44 +352,48 @@ Future orderButtonSheet(BuildContext context, VoidCallback onPressed,
 }
 
 Widget priceAndDistance({required OrderInfo order}) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 18, right: 24),
-    child: Row(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+  return Builder(
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.only(left: 18, right: 24),
+        child: Row(
           children: [
-            TextContainer(
-              formatCurrency(order.orderPrice),
-              fontWeight: FontWeight.w700,
-              fontSize: 45,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextContainer(
+                  formatCurrency(order.orderPrice),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 45,
+                ),
+                const TextContainer(
+                  "Цена заказа, uzs",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                ),
+              ],
             ),
-            const TextContainer(
-              "Цена заказа, uzs",
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
+            const Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextContainer(
+                  "${(order.distance).toString().replaceAll('.', ',')}",
+                  fontWeight: FontWeight.w700,
+                  fontSize: 55,
+                  textColor: Theme.of(context).customColor.thirdTextColor,
+                ),
+                const TextContainer(
+                  "Подача авто, км",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                ),
+              ],
             ),
           ],
         ),
-        const Spacer(),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextContainer(
-              "${(order.distance).toString().replaceAll('.', ',')}",
-              fontWeight: FontWeight.w700,
-              fontSize: 55,
-              textColor: Color(0xFFFFD600),
-            ),
-            const TextContainer(
-              "Подача авто, км",
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-            ),
-          ],
-        ),
-      ],
-    ),
+      );
+    }
   );
 }
 

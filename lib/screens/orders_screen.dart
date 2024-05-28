@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/order_box.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/screens/one_order_screen.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 import '../custom_widgets/back_button.dart';
 import '../demo_data/all_data.dart';
@@ -38,7 +39,8 @@ class OrdersScreen extends StatelessWidget {
                     fontSize: 30,
                   ),
                   const Spacer(),
-                  SvgPicture.asset("assets/icons/filter.svg"),
+                  SvgPicture.asset("assets/icons/filter.svg",
+                  color: Theme.of(context).customColor.mainTextColor,),
                 ],
               ),
               const SizedBox(height: 27),
