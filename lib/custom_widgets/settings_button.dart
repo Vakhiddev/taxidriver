@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 enum ButtonType {
   switchB,
@@ -11,40 +12,48 @@ enum ButtonType {
 
 Widget settingsButton({required ButtonType buttonType, required String title,
 bool? isOn,Function(bool value)? onChanged, VoidCallback? onPressed}) {
-  return InkWell(
-    onTap: onPressed,
-    child: Container(
-      padding: EdgeInsets.only(
-          left: 17, right: buttonType == ButtonType.selectionB ? 7 : 16),
-      width: double.maxFinite,
-      height: 49,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: const Color(0xFF23262B),
-      ),
-      child: Row(
-        children: [
-          TextContainer(
-            title,
-            fontWeight: FontWeight.w400,
-            fontSize: 14,
+  return Builder(
+    builder: (context) {
+      bool isLightTheme = Theme.of(context).brightness == Brightness.light;
+      return InkWell(
+        onTap: onPressed,
+        child: Container(
+          padding: EdgeInsets.only(
+              left: 17, right: buttonType == ButtonType.selectionB ? 7 : 16),
+          width: double.maxFinite,
+          height: 49,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor),
+            color: Theme.of(context).customColor.textFieldColor,
           ),
-          const Spacer(),
-          if(buttonType == ButtonType.switchB)
-            CustomSwitchButton(
-                value: isOn!, onChanged: onChanged),
+          child: Row(
+            children: [
+              TextContainer(
+                title,
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+              ),
+              const Spacer(),
+              if(buttonType == ButtonType.switchB)
+                CustomSwitchButton(
+                    value: isOn!, onChanged: onChanged),
 
-          if(buttonType == ButtonType.simpleB)
-            SvgPicture.asset("assets/icons/small_next.svg"),
+              if(buttonType == ButtonType.simpleB)
+                SvgPicture.asset("assets/icons/small_next.svg",
+                  color: Theme.of(context).customColor.mainTextColor,
+                ),
 
-          if(buttonType == ButtonType.selectionB)
-            SvgPicture.asset(isOn! ?
-            "assets/icons/selected.svg" :
-                    "assets/icons/unSelected.svg" ),
+              if(buttonType == ButtonType.selectionB)
+                SvgPicture.asset(isOn! ? isLightTheme ? "assets/selected_white.svg" :
+                "assets/icons/selected.svg" :
+                        "assets/icons/unSelected.svg" ),
 
-        ],
-      ),
-    ),
+            ],
+          ),
+        ),
+      );
+    }
   );
 }
 class CustomSwitchButton extends StatefulWidget {
@@ -87,7 +96,7 @@ class _CustomSwitchButtonState extends State<CustomSwitchButton> {
               child: Container(
                 height: 16,
                 decoration: BoxDecoration(
-                  color: _value ? Color(0xFFECECEC) : Color(0xFF717171),
+                  color: _value ? Color(0xFFAEAEAA) : Color(0xFF717171),
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),

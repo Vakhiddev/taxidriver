@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 import '../main.dart';
 enum InputType {
@@ -15,12 +16,14 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final double? height;
   final String? hintText;
+  final Color? color;
   const CustomTextField({
     super.key,
     required this.controller,
     this.hintText,
     this.height,
     this.maxLength,
+    this.color,
     required this.inputType,
   });
 
@@ -38,13 +41,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
       height: widget.height ?? 60,
       // height: 30,
       decoration: BoxDecoration(
-          color: const Color(0xFF26282D),
-          borderRadius: BorderRadius.circular(5)
+          color: widget.color ?? Theme.of(context).customColor.textFieldColor,
+          borderRadius: BorderRadius.circular(5),
+        border: Border.all(width: 1,color: Theme.of(context).customColor.borderColor)
       ),
       child: Stack(
         children: [
           if (widget.inputType == InputType.cardNumber)
-            SvgPicture.asset("assets/icons/wallet2.svg", width: 24,height: 17,),
+            SvgPicture.asset("assets/icons/wallet2.svg", width: 24,height: 17,
+              color: Theme.of(context).customColor.mainTextColor,),
           const SizedBox(width: 12),
           Padding(
             padding: EdgeInsets.only(
@@ -62,8 +67,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   border: InputBorder.none,
                   hintText: widget.hintText ?? '',
                   hintStyle: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                      color: Color(0xFFB0B0B0),
+                    textStyle:  TextStyle(
+                      color: Theme.of(context).customColor.mainTextColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),
@@ -74,7 +79,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: Colors.white,
               ),
 
               onChanged: (value) {

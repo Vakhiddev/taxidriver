@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/add_card_screen.dart';
+import 'package:taxidriver/theme/colors.dart';
 import '../cubit/active_button_cubit.dart';
 import '../custom_widgets/back_button.dart';
 import '../custom_widgets/container_textfield.dart';
@@ -46,7 +47,8 @@ class MyCardsScreen extends StatelessWidget {
                                 MaterialPageRoute(
                                     builder: (context) => const AddCardScreen()));
                           },
-                          child: SvgPicture.asset("assets/icons/add.svg")),
+                          child: SvgPicture.asset("assets/icons/add.svg",
+                            color: Theme.of(context).customColor.mainTextColor,)),
                     ],
                   ),
                   const SizedBox(height: 35),
@@ -71,50 +73,54 @@ class MyCardsScreen extends StatelessWidget {
   }
 
   Widget cardView({required CardInfo card}) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 22),
-      padding:
-      const EdgeInsets.only(left: 23, right: 23, top: 22.5, bottom: 25),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: const Color(0xFF23262B),
-      ),
-      child: Column(
-        children: [
-          Row(
+    return Builder(
+      builder: (context) {
+        return Container(
+          margin: EdgeInsets.only(bottom: 22),
+          padding:
+          const EdgeInsets.only(left: 23, right: 23, top: 22.5, bottom: 25),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Theme.of(context).customColor.containerColor,
+          ),
+          child: Column(
             children: [
-              SvgPicture.asset("assets/icons/uzcard.svg"),
-              const SizedBox(width: 19),
-              TextContainer(
-                formatCardNumber((card.cardNumber).toString()),
-                fontWeight: FontWeight.w700,
-                fontSize: 23,
+              Row(
+                children: [
+                  SvgPicture.asset("assets/icons/uzcard.svg"),
+                  const SizedBox(width: 19),
+                  TextContainer(
+                    formatCardNumber((card.cardNumber).toString()),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 23,
+                  ),
+                ],
               ),
+              const SizedBox(height: 23),
+              Row(
+                children: [
+                  cardDateAndNumber(isDateOrNumber: true, card: card),
+                  const Spacer(),
+                  cardDateAndNumber(isDateOrNumber: false, card: card),
+                  const Spacer(),
+                ],
+              ),
+              const SizedBox(height: 21),
+              Row(
+                children: [
+                  TextContainer(
+                    card.ownerFio,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 19,
+                  ),
+                  const Spacer(),
+                  SvgPicture.asset("assets/icons/edit.svg"),
+                ],
+              )
             ],
           ),
-          const SizedBox(height: 23),
-          Row(
-            children: [
-              cardDateAndNumber(isDateOrNumber: true, card: card),
-              const Spacer(),
-              cardDateAndNumber(isDateOrNumber: false, card: card),
-              const Spacer(),
-            ],
-          ),
-          const SizedBox(height: 21),
-          Row(
-            children: [
-              TextContainer(
-                card.ownerFio,
-                fontWeight: FontWeight.w700,
-                fontSize: 19,
-              ),
-              const Spacer(),
-              SvgPicture.asset("assets/icons/edit.svg"),
-            ],
-          )
-        ],
-      ),
+        );
+      }
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/settings_button.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/main.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 Future<void> tarifButtonSheet(BuildContext context, VoidCallback onPressed) async {
   bool eco = true;
@@ -20,8 +21,8 @@ Future<void> tarifButtonSheet(BuildContext context, VoidCallback onPressed) asyn
           return Container(
             width: double.maxFinite,
             padding: const EdgeInsets.symmetric(horizontal: 17),
-            decoration: const BoxDecoration(
-              color: Color(0xFF1F2126),
+            decoration: BoxDecoration(
+              color: Theme.of(context).customColor.buttonSheetColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
                 topRight: Radius.circular(10),
@@ -32,7 +33,7 @@ Future<void> tarifButtonSheet(BuildContext context, VoidCallback onPressed) asyn
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 15),
-                  SvgPicture.asset("assets/icons/line.svg"),
+                  SvgPicture.asset("assets/icons/line.svg",color: Theme.of(context).customColor.mainTextColor,),
                   const SizedBox(height: 10),
                   const TextContainer(
                     textAlign: TextAlign.center,

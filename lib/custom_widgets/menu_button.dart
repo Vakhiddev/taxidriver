@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 class MainButton extends StatefulWidget {
   final String? icon;
@@ -60,22 +61,22 @@ class _MainButtonState extends State<MainButton> with SingleTickerProviderStateM
                 right: widget.icon != null ? 13 : 19,),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: const Color(0xFF23262B),
+                color: Theme.of(context).customColor.containerColor,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if(widget.icon != null)
-                    SvgPicture.asset(widget.icon!),
+                    SvgPicture.asset(widget.icon!,color: Theme.of(context).customColor.secondTextColor,),
                   const SizedBox(width: 13),
                   TextContainer(
                     widget.title,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).customColor.secondTextColor,
                   ),
                   const Spacer(),
-                  SvgPicture.asset("assets/icons/next.svg"),
+                  SvgPicture.asset("assets/icons/next.svg",color: Theme.of(context).customColor.secondTextColor,),
                 ],
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:taxidriver/screens/home_screen.dart';
 import 'package:taxidriver/screens/my_profile.dart';
 import 'package:taxidriver/screens/orders_screen.dart';
 import 'package:taxidriver/screens/settings.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 import '../custom_widgets/text_container.dart';
 
@@ -87,11 +88,11 @@ class MenuScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 11),
                 child: InkWell(
                   onTap: () {},
-                  child: const TextContainer(
+                  child: TextContainer(
                     "Выход из аккаунта",
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
-                    textColor: Color(0xFFFFD600),
+                    textColor: Theme.of(context).customColor.thirdTextColor
                   ),
                 ),
               ),
@@ -104,7 +105,6 @@ class MenuScreen extends StatelessWidget {
                   "Версия 1.0..1",
                   fontWeight: FontWeight.w400,
                   fontSize: 12,
-                  textColor: Color(0xFFFFFFFF),
                 ),
               ),
             ],
