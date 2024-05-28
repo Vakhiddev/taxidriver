@@ -1,25 +1,57 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/container_button.dart';
 import 'package:taxidriver/custom_widgets/container_textfield.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
+import 'package:taxidriver/main.dart';
 import 'package:taxidriver/screens/language_page.dart';
+import '../cubit/active_button_cubit.dart';
 import '../custom_widgets/back_button.dart';
 
-class AddCardScreen extends StatefulWidget {
+class AddCardScreen extends StatelessWidget {
   const AddCardScreen({super.key});
 
   @override
-  State<AddCardScreen> createState() => _AddCardScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => ButtonCubit(),
+      child: AddCardView(),
+    );
+  }
+}
+
+class AddCardView extends StatefulWidget {
+  const AddCardView({super.key});
+
+  @override
+  State<AddCardView> createState() => _AddCardViewState();
 }
 
 TextEditingController numberController = TextEditingController();
 TextEditingController dateController = TextEditingController();
 TextEditingController phoneNumberController = TextEditingController();
 
-class _AddCardScreenState extends State<AddCardScreen> {
+class _AddCardViewState extends State<AddCardView> {
+  @override
+  void initState() {
+    super.initState();
+
+    numberController.addListener(_updateButtonState);
+    dateController.addListener(_updateButtonState);
+    phoneNumberController.addListener(_updateButtonState);
+  }
+
+  void _updateButtonState() {
+    context.read<ButtonCubit>().updateButtonState(
+          numberController,
+          dateController,
+          phoneNumberController,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,6 +90,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               const SizedBox(height: 9),
               CustomTextField(
+                  maxLength: 19,
                   height: 40,
                   controller: numberController,
                   inputType: InputType.cardNumber),
@@ -65,7 +98,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               Row(
                 children: [
                   SizedBox(
-                    width: 115,
+                    width: screenWidth * 0.2769,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -75,7 +108,9 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           fontSize: 14,
                         ),
                         const SizedBox(height: 9),
-                        CustomTextField(height: 40,
+                        CustomTextField(
+                          maxLength: 5,
+                          height: 40,
                           controller: dateController,
                           inputType: InputType.dueDate,
                         ),
@@ -94,6 +129,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         ),
                         const SizedBox(height: 9),
                         CustomTextField(
+                          maxLength: 17,
                           height: 40,
                           controller: phoneNumberController,
                           inputType: InputType.phoneNumber,
@@ -104,17 +140,44 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 ],
               ),
               const SizedBox(height: 25),
-              buttonContainer(
-                  text: "Добавить карту",
-                  height: 51,
-                  containerColor: numberController.text.isNotEmpty ?
-                  const Color(0xFFFFD600) : const Color(0xFF4D4D4D),
-                  textColor: Colors.black,
+              BlocBuilder<ButtonCubit, ButtonState>(
+                builder: (context, state) {
+                  return buttonContainer(
+                    onTap: state.isEnabled
+                        ? () async {
+                            context.read<ButtonCubit>().addNewCardToCards(
+                                  numberController,
+                                  dateController,
+                                  phoneNumberController,
+                                );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Card Added")));
+                            await Future.delayed(Duration(seconds: 2));
+                            phoneNumberController.clear();
+                            dateController.clear();
+                            numberController.clear();
+                            Navigator.pop(context, true);
+                          }
+                        : null,
+                    text: "Добавить карту",
+                    height: 51,
+                    containerColor: state.buttonColor,
+                    textColor: Colors.black,
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
     ));
+  }
+
+  @override
+  void dispose() {
+    phoneNumberController.clear();
+    dateController.clear();
+    numberController.clear();
+    super.dispose();
   }
 }

@@ -6,6 +6,7 @@ import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/my_cards.dart';
 import 'package:taxidriver/screens/my_income.dart';
+import 'package:taxidriver/theme/colors.dart';
 import '../custom_widgets/back_button.dart';
 
 class FinanceScreen extends StatelessWidget {
@@ -42,12 +43,13 @@ class FinanceScreen extends StatelessWidget {
                     top: 11, bottom: 13, right: 13, left: 12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: const Color(0xFF23262B),
+                  color: Theme.of(context).customColor.containerColor,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SvgPicture.asset("assets/icons/info.svg"),
+                    SvgPicture.asset("assets/icons/info.svg",color:
+                      Theme.of(context).customColor.mainTextColor,),
                     Row(
                       children: [
                        const Padding(
@@ -101,39 +103,46 @@ class FinanceScreen extends StatelessWidget {
   }
 
   Widget cashWidget({VoidCallback? onPressed, required bool isDeposit}) {
-    return Expanded(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          child: Container(
-            height: 47,
-            padding: const EdgeInsets.only(left: 11),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                width: 1,
-                color: isDeposit ? Colors.white : const Color(0xFFFFD600),
+    return Builder(
+      builder: (context) {
+        bool isLightTheme = Theme.of(context).brightness == Brightness.light;
+        return Expanded(
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onPressed,
+              child: Container(
+                height: 47,
+                padding: const EdgeInsets.only(left: 11),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                    width: 1,
+                    color: isLightTheme ? isDeposit ? Color.fromRGBO(41, 146, 146, 1) : const Color(0xFFFFD600) :
+                    isDeposit ? Colors.white : const Color(0xFFFFD600),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(isDeposit
+                        ? "assets/icons/wallet.svg"
+                        : "assets/icons/wallet_yellow.svg",
+                    color: isLightTheme ? Colors.black : isDeposit != true ? Color(0xFFFFD600) : null),
+                    const Spacer(),
+                    TextContainer(
+                      isDeposit ? "Пополнить" : "Вывести",
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      textColor: isLightTheme ? Colors.black : isDeposit ? Colors.white : Theme.of(context).customColor.secondTextColor,
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
-            child: Row(
-              children: [
-                SvgPicture.asset(isDeposit
-                    ? "assets/icons/wallet.svg"
-                    : "assets/icons/wallet_yellow.svg"),
-                const Spacer(),
-                TextContainer(
-                  isDeposit ? "Пополнить" : "Вывести",
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  textColor: isDeposit ? Colors.white : const Color(0xFFFFD600),
-                ),
-                const Spacer(),
-              ],
-            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }

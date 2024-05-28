@@ -2,51 +2,70 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
+import 'package:taxidriver/theme/colors.dart';
 
 Widget orderBox({required OrderInfo order, VoidCallback? onPressed}) {
-  return GestureDetector(
-    onTap: onPressed,
-    child: Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-          color: const Color(0xFF26282D), borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15,top: 10,right: 14),
-            child: Row(
-              children: [
-                TextContainer(
-                  formatTime(order.completedTime),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
+  return Builder(
+    builder: (context) {
+      bool isLightTheme = Theme.of(context).brightness == Brightness.light;
+      return GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+              color: Theme.of(context).customColor.containerColor,
+              borderRadius: BorderRadius.circular(8)),
+          child: Column(
+            children: [
+              Container(
+                height: 37,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).customColor.secondContainerColor,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),topRight: Radius.circular(8),
+                  ),
                 ),
-                const Spacer(),
-                TextContainer(
-                  "${formatCurrency(order.totalPrice)} UZS",
-                  fontWeight: FontWeight.w400,
-                  fontSize: 15,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15,right: 14,bottom: 0,
+                      top: isLightTheme ? 0 : 10),
+                  child: Row(
+                    children: [
+                      TextContainer(
+                        formatTime(order.completedTime),
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                      const Spacer(),
+                      TextContainer(
+                        "${formatCurrency(order.totalPrice)} UZS",
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              if(isLightTheme != true)
+              const SizedBox(height: 7),
+              if(isLightTheme != true)
+              const Divider(
+                color: Color(0xFF353537),
+                thickness: 1,
+              ),
+              _locationRow(order: order,startPoint: true),
+              const Divider(
+                color: Color(0xFF353537),
+                thickness: 1,
+                indent: 36,
+                endIndent: 29,
+              ),
+              _locationRow(order: order,startPoint: false),
+            ],
           ),
-          const SizedBox(height: 7),
-          const Divider(
-            color: Color(0xFF353537),
-            thickness: 1,
-          ),
-          _locationRow(order: order,startPoint: true),
-          const Divider(
-            color: Color(0xFF353537),
-            thickness: 1,
-            indent: 36,
-            endIndent: 29,
-          ),
-          _locationRow(order: order,startPoint: false),
-        ],
-      ),
-    ),
+        ),
+      );
+    }
   );
 }
 

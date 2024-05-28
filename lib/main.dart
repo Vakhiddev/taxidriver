@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:taxidriver/screens/splashscreen.dart';
+import 'package:taxidriver/theme/theme_notifier.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  ThemeNotifier themeNotifier = ThemeNotifier();
+  await themeNotifier.loadThemePreference();
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => themeNotifier,
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,15 +25,19 @@ class MyApp extends StatelessWidget {
     screenHeight = height;
     double width = MediaQuery.of(context).size.width;
     screenWidth = width;
-    return MaterialApp(
-      debugShowCheckedModeBanner: true,
-      theme: ThemeData(
-          scaffoldBackgroundColor: const Color(0xff1E2127),
-          appBarTheme: const AppBarTheme(backgroundColor: Color(0xff1E2127))),
-      home: const SplashScreen(),
+
+    return Consumer<ThemeNotifier>(
+        builder: (context, themeNotifier, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: true,
+            theme: themeNotifier.currentTheme,
+            home: const SplashScreen(),
+          );
+        },
     );
   }
 }
 
 late double screenWidth;
 late double screenHeight;
+

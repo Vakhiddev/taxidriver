@@ -5,13 +5,12 @@ class UserInfo {
   final String avatar;
   final double rate;
 
-  const UserInfo({
-    required this.id,
-    required this.fio,
-    required this.phoneNumber,
-    required this.avatar,
-    required this.rate
-  });
+  const UserInfo(
+      {required this.id,
+      required this.fio,
+      required this.phoneNumber,
+      required this.avatar,
+      required this.rate});
 }
 
 class OrderInfo {
@@ -70,14 +69,14 @@ class MonthlySpends {
   const MonthlySpends({
     required this.month,
     required this.spend,
-});
+  });
 }
 
 List<MonthlySpends> spends = [
-  MonthlySpends(month: DateTime(2024,1), spend: 7127800),
-  MonthlySpends(month: DateTime(2024,2), spend: 7127800),
-  MonthlySpends(month: DateTime(2024,3), spend: 7127800),
-  MonthlySpends(month: DateTime(2024,4), spend: 7127800),
+  MonthlySpends(month: DateTime(2024, 1), spend: 7127800),
+  MonthlySpends(month: DateTime(2024, 2), spend: 7127800),
+  MonthlySpends(month: DateTime(2024, 3), spend: 7127800),
+  MonthlySpends(month: DateTime(2024, 4), spend: 7127800),
 ];
 
 UserInfo user = const UserInfo(
@@ -95,6 +94,16 @@ CardInfo myCard = CardInfo(
   phoneNumber: "+998 90 755 4554",
   ownerFio: "Ponomarev Dmitriy",
 );
+
+List<CardInfo> myCards = [
+  CardInfo(
+    cardNumber: 8600757765005782,
+    balance: 2210650,
+    dueDate: DateTime(2024, 08),
+    phoneNumber: "+998 90 755 4554",
+    ownerFio: "Ponomarev Dmitriy",
+  ),
+];
 
 List<OrderInfo> orders = [
   OrderInfo(

@@ -9,6 +9,7 @@ import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/main.dart';
 import 'package:taxidriver/screens/menu_screen.dart';
 import 'package:taxidriver/screens/one_order_screen.dart';
+import 'package:taxidriver/theme/colors.dart';
 import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 import '../custom_widgets/animated_button.dart';
@@ -89,10 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     const Spacer(),
                     const SizedBox(height: 12),
                     SpeedDial(
-                      childrenButtonSize: Size(158,55),
+                      childrenButtonSize: Size(screenWidth * 0.40,55),
                       backgroundColor: Colors.transparent,
-                      overlayColor: Color(0xFF1E2127).withOpacity(0.9),
-                      activeBackgroundColor: Color(0xFF1E2127).withOpacity(0.79),
+                      overlayColor: Theme.of(context).customColor.buttonSheetColor.withOpacity(0.9),
+                      activeBackgroundColor: Theme.of(context).customColor.buttonSheetColor.withOpacity(0.79),
                       direction: SpeedDialDirection.down,
                       curve: Curves.easeInBack,
                       openCloseDial: isDialOpen,
@@ -207,6 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextContainer(title,
             fontWeight: FontWeight.w500,
               fontSize: 16,
+              textColor: Colors.white,
             ),
             const Spacer(),
             SvgPicture.asset("assets/icons/next.svg")

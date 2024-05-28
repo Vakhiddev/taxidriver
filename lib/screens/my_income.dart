@@ -3,6 +3,7 @@ import 'package:taxidriver/custom_widgets/order_box.dart';
 import 'package:taxidriver/custom_widgets/text_container.dart';
 import 'package:taxidriver/demo_data/all_data.dart';
 import 'package:taxidriver/screens/language_page.dart';
+import 'package:taxidriver/theme/colors.dart';
 import '../custom_widgets/back_button.dart';
 import '../main.dart';
 
@@ -45,38 +46,42 @@ class MyIncomeScreen extends StatelessWidget {
   }
 
   Widget spendContainer({required MonthlySpends spend}) {
-    return Container(
-      height: 75,
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.only(left: 23, right: 19),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: const Color(0xFF23262B),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          TextContainer(
-            spendTimeFormatter(spend.month),
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+    return Builder(
+      builder: (context) {
+        return Container(
+          height: 75,
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.only(left: 23, right: 19),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Theme.of(context).customColor.containerColor,
           ),
-          Container(
-              height: 40,
-              width: screenWidth * 0.372,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: const Color(0xFFFFD600),
-              ),
-              child: Center(
-                child: TextContainer("${formatCurrency(spend.spend)} uzs",
-                textColor: Colors.black,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextContainer(
+                spendTimeFormatter(spend.month),
+                fontWeight: FontWeight.w600,
                 fontSize: 16,
-                fontWeight: FontWeight.w500,),
               ),
-          )
-        ],
-      ),
+              Container(
+                  height: 40,
+                  width: screenWidth * 0.372,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: const Color(0xFFFFD600),
+                  ),
+                  child: Center(
+                    child: TextContainer("${formatCurrency(spend.spend)} uzs",
+                    textColor: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,),
+                  ),
+              )
+            ],
+          ),
+        );
+      }
     );
   }
 
